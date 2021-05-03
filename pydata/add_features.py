@@ -1,9 +1,10 @@
 import pandas as pd
-
+import time
 
 # =============================================================================
 # utils
 # =============================================================================
+
 
 def ts_str2sec(format_time):
     '''
@@ -42,4 +43,3 @@ def ts_attrs_add(df, ts_col='request_time'):
     df[ts_col[0:-4] + 'date'] = df[ts_col].dt.date
 
     return df
-

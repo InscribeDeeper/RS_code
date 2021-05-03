@@ -1,7 +1,7 @@
-const showsRoutes = require("./shows");
+const rsRoutes = require("./rs");
 
 const constructorMethod = (app) => {
-	app.use("/", showsRoutes); // landing
+	app.use("/", rsRoutes); // landing
 
 	//http://localhost:3000/*
 	app.use("*", (req, res) => {

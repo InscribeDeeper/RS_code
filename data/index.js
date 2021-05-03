@@ -1,5 +1,5 @@
-const showData = require('./shows');
+const rsData = require('./rs');
 
 module.exports = {
-    shows: showData
+    rs: rsData
 };

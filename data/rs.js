@@ -1,12 +1,24 @@
-const axios = require("axios");
+// const axios = require("axios");
+const mongoCollections = require('../config/mongoCollections');
+const RS_map = mongoCollections.RS_map;
+
 
 let exportedMethods = {
-	async getShows() {
-		const { data } = await axios.get("http://api.tvmaze.com/shows");
-		const parsedData = data; // JSON.parse(JSON.stringify(data)) // parse the data from JSON into a normal JS Object
-		return parsedData; // this will be the array of people objects
+	async getItems() {
+		const mapCollections = await RS_map()
+
 	},
 
+	async getBookById(id){
+        if (!id || typeof(id)!="string" || id.trim().length==0)
+            throw "Id parameter is not provided correctly";
+        // let parsedId = ObjectId(id);         
+        const booksCollection = await books();
+        const book = await booksCollection.findOne({ _id: id });
+        if (!book) throw `book not found with id: ${id}`;
+        return book;
+    },
+	
 	async getShowById(id) {
 		if (id == null || !/^\d+$/.test(id)) throw "You must provide an numerical id to search for";
 		if (id <= 0 || id % 1 !== 0) throw "You must provide an positive integer id to search for";

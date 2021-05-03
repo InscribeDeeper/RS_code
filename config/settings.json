@@ -1,6 +1,6 @@
 {
 	"mongoConfig": {
 		"serverUrl": "mongodb://localhost:27017/",
-		"database": "FirstName_LastName_lab7"
+		"database": "JD_db"
 	}
 }
