@@ -1,0 +1,9 @@
+# If you want to submit class_demo.py file into github 
+
+
+git clone https://github.com/PosterStevens/20Spring.git
+cd Tips
+git add class_demo.py
+git commit -m "Add description of file here"
+git push
+
