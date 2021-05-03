@@ -2,3 +2,4 @@
 # \data
 /processed_data/**/*.csv
 /local_data/*.csv
+/data/output/*.csv
