@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Search engine</title>
+    <p>Lab8_Wyang</p>
+    <link rel="stylesheet" href="/public/site.css">
+</head>
+
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Make a new search</a></li>
+                {{!-- 这里怎么回到host --}}
+            </ul>
+        </nav>
+        <p>The header part</p>
+    </header>
+
+    <p>Lab8_Wyang</p>
+    <main>
+        {{{body}}}
+        {{!-- 三个括号表示会解析里面 的html内容, 两个表示直接输出 html txt, 两个的话 不会render, 只会escaping render it--}}
+        {{!-- 如果这里面有html tag数据, 则直接render the view of it --}}
+        {{!-- render会来这里? 并且把这个main界面展现出来. --}}
+        {{!-- 这里的body是下面传入的post的 --}}
+
+    </main>
+    <footer>just keep going</footer>
+</body>
+
+</html>

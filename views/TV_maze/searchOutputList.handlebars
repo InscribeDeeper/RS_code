@@ -1,0 +1,25 @@
+    {{#if Found}}
+    <title>{{title}}</title>
+    <section>
+    <h1>Shows Found</h1>
+    <h2 id='searchHistory'>your search terms: {{searchTerm}}</h2>
+
+    <ul class="show-list">
+        {{#each shows}}
+        <li>
+            <a href="/shows/{{this.show.id}}">{{this.show.name}}</a>
+            {{!-- 如果有warning 或者错误, 则会 在这里显示出所有的 element. 这里的this表示 for loop中的每一个element--}}
+        </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+
+    {{#if notFound}}
+    <title>{{title}}</title>
+    <section>
+        <h1>Shows not Found</h1>
+        <p class="not-found">We're sorry, but no results were found for {{{searchTerm}}}.</p>
+
+    </section>
+    {{/if}}

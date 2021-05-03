@@ -1,0 +1,38 @@
+<title>{{title}}</title>
+
+<section>
+    <p>
+    <h1>TV show search engine</h1>
+
+    <form action="/search" method="POST"> {{!-- action to search route. --}}
+        <div>
+            <label>
+                Input your searchTerm
+                <input type="text" name='input'> {{searchTerm}}</input>
+                {{!-- 怎么把上次的记录传进来 --}}
+            </label>
+        </div>
+
+        <button type="submit">Begin Search</button>
+        <button type="reset">Clear Search</button>
+        <button type="button">Click me with no change :DD </button>
+    </form>
+
+
+    <a href="/">Back to home page</a>
+    </p>
+
+    {{!-- 这个界面返回的所有的内容, 这里还包含了 所有的error , 这里需要判断 是否有error, 所以在route里面, 就已经 储存了对应的error --}}
+    {{!-- 如果在route中判断没有error, 则会redirect到 新创建的文件夹下, 不然的话, 就会返回到当前这个文件 add posts的界面, 并且出现错误--}}
+    {{#if hasErrors}}
+    <ul class="error-list">
+        {{#each errors}}
+        <li>
+            <p class="error">{{this}}</p>
+            {{!-- 如果有warning 或者错误, 则会 在这里显示出所有的 element. 这里的this表示 for loop中的每一个element--}}
+        </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+</section>
