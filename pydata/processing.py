@@ -7,6 +7,8 @@ import pandas as pd
 
 # ## Generate user-item matrix by day
 # - it can be done by query as well
+
+
 def generate_user_item_matrix(daily_dt, based='click'):
     """
     @Params:
@@ -133,7 +135,6 @@ def get_score(x, updated_user_item_matrix, users_sim):
     return res
 
 
-
 ####################################
 # # offline models - user based CF
 ####################################
@@ -169,6 +170,7 @@ def get_u_pred_map(updated_user_item_matrix, topNeighbor=100, rs_topItem=10):
 # - cosine-based similarity
 # - Minimum number of users for each item-item pair: 5 (see below for explanation)
 # - Number of similar items stored: 50
+
 
 def get_i_pred_map(updated_user_item_matrix, topNeighbor=None, rs_topItem=10):
     """
@@ -218,18 +220,18 @@ def get_u_pred_map2(updated_user_item_matrix, topNeighbor=100, rs_topItem=10):
         rs_topItem: how many similar items would be saved on the hashmap for recommendation
     Return:
         the user to item hashmap
-    """    
+    """
     updated_iu_mtx = updated_user_item_matrix.T
-    item_KNN_prediction = get_i_pred_map(updated_user_item_matrix, topNeighbor=100, rs_topItem=10) # cosine similarity rather than pearson
-    # get neighbors items average clicks  
-        ## 1.找到最相似的10个item 保存到KNN_prediction tab中;  2. 找到那10个item在总表中每个users的得分, 计算其均值, 输出一个行向量 (每一个element是一个user的对这个item的 得分均值)
+    item_KNN_prediction = get_i_pred_map(updated_user_item_matrix, topNeighbor=100, rs_topItem=10)  # cosine similarity rather than pearson
+    # get neighbors items average clicks
+    # 1.找到最相似的10个item 保存到KNN_prediction tab中;  2. 找到那10个item在总表中每个users的得分, 计算其均值, 输出一个行向量 (每一个element是一个user的对这个item的 得分均值)
     score = item_KNN_prediction.apply(lambda x: updated_iu_mtx.loc[x.tolist()].mean(), axis=1)
-    # get top K based on neighbors items average clicks  
-        ## 3.对每一个user, 找到 均值得分 排名最高的20个item
-    # rs_topItem = 20 
-        ## np.argsort(x.values) 必须用values, 因为如果x是pd.series, 则会根据 key 的字符串 去排序
-    pred_utab = score.T.apply(lambda x:x.index[get_topK_idx(x, rs_topItem)].tolist(), axis=1) # 取出来的是一个series, 所以需要用index, 而不是columns (虽然x是一行)
-    pred_utab = pred_utab.to_frame().rename(columns={0:"items"})
+    # get top K based on neighbors items average clicks
+    # 3.对每一个user, 找到 均值得分 排名最高的20个item
+    # rs_topItem = 20
+    # np.argsort(x.values) 必须用values, 因为如果x是pd.series, 则会根据 key 的字符串 去排序
+    pred_utab = score.T.apply(lambda x: x.index[get_topK_idx(x, rs_topItem)].tolist(), axis=1)  # 取出来的是一个series, 所以需要用index, 而不是columns (虽然x是一行)
+    pred_utab = pred_utab.to_frame().rename(columns={0: "items"})
     return pred_utab
 
 
@@ -275,7 +277,7 @@ def get_u_pred_map3(combined_data, rs_topItem):
     """
     User grouping with their demographic attributes, ranking the favorite top 10 items for each user group.
     This method will be better to use as recall part in RS
-    
+
     Demographic based ranking:
         Build a map that: given an item, return recommendate items
 
@@ -283,21 +285,21 @@ def get_u_pred_map3(combined_data, rs_topItem):
         rs_topItem: how many similar items would be saved on the hashmap for recommendation
     Return:
         the item to item hashmap
-    """    
+    """
     target_user_cols = ['user_level', 'plus', 'gender', 'age', 'marital_status', 'education', 'city_level', 'purchase_power']
-        
+
     a = combined_data
 
     # feature string combine
-    a['combined_attr'] = a[target_user_cols].astype(str).apply(lambda x: "__".join(x), axis=1) 
+    a['combined_attr'] = a[target_user_cols].astype(str).apply(lambda x: "__".join(x), axis=1)
     # b is a table of combined_attr, sku_ID, count of click by user_ID
-    b = a.groupby(['combined_attr','sku_ID'])['user_ID'].count().reset_index() 
-    # c is highest rank items of each attributes table 
-    c = b.groupby(['combined_attr']).apply(lambda x: x.nlargest(rs_topItem, columns=['user_ID'])['sku_ID'].tolist()).rename('items').to_frame() # sort with rs_topItem highest items for each combine attr
+    b = a.groupby(['combined_attr', 'sku_ID'])['user_ID'].count().reset_index()
+    # c is highest rank items of each attributes table
+    c = b.groupby(['combined_attr']).apply(lambda x: x.nlargest(rs_topItem, columns=['user_ID'])['sku_ID'].tolist()).rename('items').to_frame()  # sort with rs_topItem highest items for each combine attr
     # # pred_utab is join c table with combined_attr
     d = a.groupby('user_ID')[['combined_attr']].last().reset_index()
-    pred_utab = d.merge(c, left_on='combined_attr', right_index=True)[['user_ID','items']].set_index('user_ID')
-    
+    pred_utab = d.merge(c, left_on='combined_attr', right_index=True)[['user_ID', 'items']].set_index('user_ID')
+
     return pred_utab
 
 

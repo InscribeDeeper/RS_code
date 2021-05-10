@@ -23,7 +23,7 @@ class DB_utils:
         host = "localhost"  # ip
         port = 27017  # 默认端口
         dbName = "JD_db"  # 数据库名
-        # user = "root"         #用户名
+        # user = "root"   #用户名
         # password = ***      #密码
         MClient = MC(host=host, port=port)  # 连接MongoDB
         db = MClient[dbName]  # 指定数据库，等同于 use dbName # db.authenticate(user,password)  #用户验证，无用户密码可忽略此操作
@@ -72,14 +72,12 @@ class DB_utils:
         db = self.db_connect()
         collection = "ui_mtx"
 
-
         files_folder, output_folder, PATH_CLICK, PATH_USER, PATH_SKU, PATH_ORDER = get_folder_setting()
         # # STEP 1: load saved user_item_from_start from previous day.
         # user_item_from_start = pd.read_csv(output_folder + 'cum_ui_mtx/' + str(self.now) + '.csv', index_col="user_ID")
         user_item_from_start = pd.read_csv(output_folder + 'cum_ui_mtx/' + str(date) + '.csv', index_col="user_ID")
         db.logout()
         return user_item_from_start
-
 
     def ui_mtx_update(self, data_tab):
         '''
@@ -98,8 +96,7 @@ class DB_utils:
         db = self.db_connect()
         collection = "ui_mtx"
 
-
-        updated_user_item_matrix = data_tab 
+        updated_user_item_matrix = data_tab
         files_folder, output_folder, PATH_CLICK, PATH_USER, PATH_SKU, PATH_ORDER = get_folder_setting()
         # # STEP 1: load saved user_item_from_start from previous day.
         # user_item_from_start = pd.read_csv(output_folder + 'cum_ui_mtx/' + str(self.now) + '.csv', index_col="user_ID")
@@ -118,6 +115,31 @@ class DB_utils:
         db.logout()
         return updated_user_item_matrix
 
+    def load_middle(self, date, tech_type, recommend_type):
+        '''
+        data_tab should have index sku_ID or user_ID, with one columns that contains the recommend items list.
+
+        schema: 
+        {"tab_type": ui_mtx,
+        "recommend_type": recommend_type,
+        "date": self.date,
+        "model_update_consuming_time": model_updating_time,
+        "cum_ui_mtx": data dict
+        }
+
+        '''
+
+        db = self.db_connect()
+
+        collection = "RS_map"
+
+        document = {'date': date, 'tech_type': tech_type, 'recommend_type': recommend_type}
+
+        doc = db[collection].find_one(document)  # 单个对象
+
+        db.logout()
+        
+        return pd.DataFrame.from_dict(doc['mapping_tab'], orient='index')
 
 # daily_routing = DB_utils(date="2018-03-05")
 
@@ -154,4 +176,3 @@ if __name__ == '__main__':
     daily_routing = DB_utils(date=now)
     update_info = daily_routing.rs_map_insertion(data_tab, need_provide_iu_ID=need_provide_iu_ID, tech_type=tech_type, recommend_type=recommend_type, model_updating_time=model_updating_time)
     print("update db with samples", update_info.raw_result)
-

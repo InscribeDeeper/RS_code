@@ -1,7 +1,10 @@
+import os
 
 def get_folder_setting():
-    files_folder = "../local_data/"
-    output_folder = "../processed_data/"
+    # os.chdir(os.path.dirname(__file__))
+
+    files_folder = "e:/wyang_github/RS_code/local_data/"
+    output_folder = "e:/wyang_github/RS_code/processed_data/"
     PATH_CLICK = files_folder + 'JD_click_data.csv'
     PATH_USER = files_folder + 'JD_user_data.csv'
     PATH_SKU = files_folder + 'JD_sku_data.csv'

@@ -11,7 +11,6 @@ import json
 from config.global_args import get_folder_setting
 
 
-
 # =============================================================================
 # Function to load data : not DB version
 # =============================================================================
@@ -73,11 +72,11 @@ def load_combined_data(now="2018-03-15", date_field='order_date', file_path="", 
     return df
 
 
-def load_user(PATH_USER, now="2018-04"):
+def load_user(PATH_USER="E:\wyang_github\RS_code\local_data\JD_user_data.csv", now="2018-04"):
     return pd.read_csv(PATH_USER, index_col="user_ID")
 
 
-def load_sku(PATH_SKU, now="2018-04"):
+def load_sku(PATH_SKU="E:\wyang_github\RS_code\local_data\JD_sku_data.csv", now="2018-04"):
     return pd.read_csv(PATH_SKU, index_col="sku_ID")
 
 
