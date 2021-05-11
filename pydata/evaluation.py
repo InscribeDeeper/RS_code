@@ -3,6 +3,8 @@
 from loading import *
 from db_utils import DB_utils
 import argparse
+from tqdm import tqdm
+
 import pandas as pd
 from config.global_args import get_folder_setting
 files_folder, output_folder, PATH_CLICK, PATH_USER, PATH_SKU, PATH_ORDER = get_folder_setting()
@@ -73,6 +75,10 @@ def get_daily_formated_summary(rec_daily, ui2i_tab, tech_type, recommend_type, d
 
 
 def get_daily_comparsion(now, daily_routing, rec_daily):
+    date, tech_type, recommend_type = now, "user based recommendation", "user to item"
+    ui2i_tab = daily_routing.load_middle(date, tech_type, recommend_type)
+    ds0, _ = get_daily_formated_summary(rec_daily, ui2i_tab, tech_type, recommend_type, date)
+
     date, tech_type, recommend_type = now, "item based recommendation", "item to item"
     ui2i_tab = daily_routing.load_middle(date, tech_type, recommend_type)
     ds1, _ = get_daily_formated_summary(rec_daily, ui2i_tab, tech_type, recommend_type, date)
@@ -94,17 +100,14 @@ def get_daily_comparsion(now, daily_routing, rec_daily):
     ui2i_tab = ui2i_tab.apply(lambda x: pd.Series(eval(x[0])), axis=1)
     ds5, _ = get_daily_formated_summary(rec_daily, ui2i_tab, tech_type, recommend_type, date)
 
-    return pd.concat([ds1, ds2, ds3, ds4, ds5], axis=1)
+    return pd.concat([ds0, ds1, ds2, ds3, ds4, ds5], axis=1)
 
 
 if __name__ == '__main__':
-    now = '2018-03-15'
-    daily_routing = DB_utils(date=now)
-    rec_daily = load_combined_data(now=now, date_field='request_time', file_path=PATH_CLICK, num_predays=1, output_folder=output_folder)
-    daily_comparsion = get_daily_comparsion(now, daily_routing, rec_daily)
-    print(daily_comparsion)
-    
-    # date, tech_type, recommend_type = now, "w2v based recommendation", "item to item"
-    # ui2i_tab = daily_routing.load_middle(date, tech_type, recommend_type)
-    # ui2i_tab.to_csv("./evaluation_test/w2v_tab.csv")
-    # ds5, _ = get_daily_formated_summary(rec_daily, ui2i_tab, tech_type, recommend_type, date)
+
+    for day in tqdm(range(15, 16)):
+        now = '2018-03-' + str(day)
+        daily_routing = DB_utils(date=now)
+        rec_daily = load_combined_data(now=now, date_field='request_time', file_path=PATH_CLICK, num_predays=1, output_folder=output_folder)
+        daily_comparsion = get_daily_comparsion(now, daily_routing, rec_daily)
+        daily_comparsion.to_csv("./eval_result/"+str(now)+'.csv')

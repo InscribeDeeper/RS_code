@@ -3,10 +3,10 @@
 - This part of code should be tested on jupyter notebook for convenience.
 
 CLI
-python .\pydata\system_init.py .\pydata\main_daily_update.py
-python .\pydata\main_daily_update.py -t 2018-03-14
-python .\pydata\main_daily_update.py -t 2018-03-15
-python .\pydata\main_daily_update.py -t 2018-03-16
+- python .\pydata\system_init.py .\pydata\main_daily_update.py
+- python .\pydata\main_daily_update.py -t 2018-03-14
+- python .\pydata\main_daily_update.py -t 2018-03-15
+- python .\pydata\main_daily_update.py -t 2018-03-16
 
 
 1. main_daily_update will generate the cum_ui_mtx for next_date 

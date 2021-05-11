@@ -53,24 +53,24 @@ if __name__ == '__main__':
         # insert_info = db["ui_mtx"].insert_one(document)
         # db.logout()
 
-        # ## W2V init
-        # - once a month
-        rec_from_start = load_combined_data(now=now, date_field='request_time', file_path=PATH_CLICK, Filter=False, from_start=True, num_predays=None, output_folder=output_folder)
-        i_rs_pred_wv = get_i_pred_map_wv(rec_from_start, rs_topItem) # this output should be formated later
+    # ## W2V init
+    # - once a month
+    rec_from_start = load_combined_data(now=now, date_field='request_time', file_path=PATH_CLICK, Filter=False, from_start=True, num_predays=None, output_folder=output_folder)
+    i_rs_pred_wv = get_i_pred_map_wv(rec_from_start, rs_topItem) # this output should be formated later
 
-        # ## Offline - server side - params = [now, user_rec_type="order"]
-        # - DB version should be used to replace this part
-        # - Only now and user_rec_type = click / order
+    # ## Offline - server side - params = [now, user_rec_type="order"]
+    # - DB version should be used to replace this part
+    # - Only now and user_rec_type = click / order
 
-        # i_rs_pred_wv.to_csv(output_folder + 'item_wv_rs/' + 'model.csv')
+    # i_rs_pred_wv.to_csv(output_folder + 'item_wv_rs/' + 'model.csv')
 
 
-        daily_routing = DB_utils(date=now)
-        data_tab = pd.DataFrame(i_rs_pred_wv)
-        model_updating_time = "No rec"
-        need_provide_iu_ID = "item_ID"
-        tech_type = "w2v based recommendation"
-        recommend_type = "item to item"
-        model_updating_time = "id-10"
-        update_info = daily_routing.rs_map_insertion(data_tab, need_provide_iu_ID=need_provide_iu_ID, tech_type=tech_type, recommend_type=recommend_type, model_updating_time=model_updating_time)
-        # print("update db with samples", update_info.modified_count)
+    daily_routing = DB_utils(date=now)
+    data_tab = pd.DataFrame(i_rs_pred_wv)
+    model_updating_time = "No rec"
+    need_provide_iu_ID = "item_ID"
+    tech_type = "w2v based recommendation"
+    recommend_type = "item to item"
+    model_updating_time = "id-10"
+    update_info = daily_routing.rs_map_insertion(data_tab, need_provide_iu_ID=need_provide_iu_ID, tech_type=tech_type, recommend_type=recommend_type, model_updating_time=model_updating_time)
+    # print("update db with samples", update_info.modified_count)

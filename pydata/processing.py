@@ -160,6 +160,7 @@ def get_u_pred_map(updated_user_item_matrix, topNeighbor=100, rs_topItem=10):
     # users_sim = user_cor.apply(lambda x: pd.Series(x.values[get_topK_idx(x, topNeighbor)]), axis=1)
     score = topN_sim_users.progress_apply(lambda x: get_score(x, updated_user_item_matrix=updated_user_item_matrix, users_sim=users_sim), axis=1)  # x 是一个user_ID
     pred_utab = score.apply(lambda x: updated_user_item_matrix.columns[get_topK_idx(x, rs_topItem)].tolist())  # get top items index by "np.argsort(x)[::-1][0:rs_topItem]"
+    pred_utab = pred_utab.rename('items').to_frame()
     return pred_utab
 
 ####################################
@@ -331,4 +332,5 @@ def get_i_pred_map_wv(rec_from_start, rs_topItem):
     # sg_wv_model.wv.vocab
     # item_wv[1].shape
     pred_itab = wv_KNN.set_index('sku_ID')
+    # pred_itab = pred_itab['items'].apply(lambda x: pd.Series(x))
     return pred_itab
