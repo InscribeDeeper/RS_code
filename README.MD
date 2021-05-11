@@ -43,10 +43,9 @@ For item embedding, the algorithm first generate user click sequence, and treat 
 
 The ranking part of this system is computed based on the scores on the scoring part, rather than ranking neural networks. The summary is shown as graph as follows.
 
-
-<div align=center>
 ![Offline platform](https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png)
 
+<div align=center>
 <img alt="Offline platform" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png"/>
 
 Offline platform
