@@ -76,3 +76,11 @@ From comparison on several days, the item-based recommendation (which directly c
 The online model fusion part should be only written in java scripts form, which is not implemented in this period. Also, the evaluation method such as A/B test for this dynamic online fusion method is needed.
 
 In the future, this project will be tested on different dataset that without encoding the SKU and user ID, which may have more intuitive recommendation result. Furthermore, with more computational resource, this system should be run on the large scale with the prepared parameters in functions. On ranking model aspect, to further improve the accuracy, this project probably extends more neural network models. Of course, the speed of the response will need to be considered.
+
+
+# TODO
+- finish online model's fusion with JS code
+- save cum_ui_mtx into mongoDB (16MB limit handling)
+- offline evaluation
+    - NLP n-gram
+- incorporate more models
