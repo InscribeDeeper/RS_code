@@ -45,7 +45,7 @@ The ranking part of this system is computed based on the scores on the scoring p
 
 <!-- ![Offline platform](https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png) -->
 <div align=center>
-<img alt="Offline platform" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png"/>
+<img alt="Offline platform" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/Offline_platform.png"/>
 
 Offline platform
 </div>
