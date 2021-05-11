@@ -6,7 +6,7 @@ This project focus on the scenario that a startup company with available thirty 
 
 There are three main parts that consisted by this recommender system: online platform, offline platform and algorithms tools. Algorithms tools is the existed python packages for recommendations. The output of offline platform is stored into mongo database. The online part will take advantage of the pre-calculated offline data and make recommendations. The effectiveness of this system is only evaluated offline. The data source will be the user data, item data and the interaction data on the left hand-side of the following graph.
 
-<div align=center><img alt="System architecture" src="https://github.com/InscribeDeeper/RS_code/tree/master/support_doc/img/System_architecture.png"/>
+<div align=center><img alt="System architecture" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/System_architecture.png"/>
 
 System architecture
 </div>
@@ -19,14 +19,14 @@ For the offline platform, there are two main categories: user to items mapping t
 
 The following graph is the data follows of this system, which also contains technical details.
 
-<div align=center><img alt="Architecture detail" src="https://github.com/InscribeDeeper/RS_code/tree/master/support_doc/img/Architecture_detail.png"/>
+<div align=center><img alt="Architecture detail" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/Architecture_detail.png"/>
 
 Architecture detail
 </div>
 
 This system uses click interaction as primary target to extract information. Joined the tables to get the desired table shown as follows, which contains SKU ID, user ID. Each row is a click by the user. (Preprocess) It removed click records with the same user ID and request time since users may click several times on their screen, but the effective records in there are only once. For privacy protection, the SKU ID and user ID are encoded, which make the result of the system not that intuitive.
 
-<div align=center><img alt="joined tab" src="https://github.com/InscribeDeeper/RS_code/tree/master/support_doc/img/joined_tab.png"/>
+<div align=center><img alt="joined tab" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png"/>
 
 Joined tab
 </div>
@@ -43,8 +43,7 @@ For item embedding, the algorithm first generate user click sequence, and treat 
 
 The ranking part of this system is computed based on the scores on the scoring part, rather than ranking neural networks. The summary is shown as graph as follows.
 
-![Offline platform](https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png)
-
+<!-- ![Offline platform](https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png) -->
 <div align=center>
 <img alt="Offline platform" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/joined_tab.png"/>
 
@@ -57,7 +56,7 @@ Offline platform
 The [dataset](https://www.dropbox.com/sh/kdgx4wconscfllj/AADNR94dAP8PlmGCYhHLT5Eqa?dl=0) only contains 30 successive days records, which contains 31868 unique SKU ID, 457298 unique user ID and 20214515 click records. The interaction data is about 1 GB, but when loading into memory and computing the correlations, the RAM will be consumed really fast. To speed up experiment, this project only randomly choosing about 10% users and items as target first. As show on the technical solutions part, the SKU table contains two attributes, which are encoded. The user table contains 9 attributes, which are listed as follows.
 
 
- <div align=center><img alt="User table attributes" src="https://github.com/InscribeDeeper/RS_code/tree/master/support_doc/img/User_table attributes.png"/>
+ <div align=center><img alt="User table attributes" src="https://github.com/InscribeDeeper/RS_code/blob/master/support_doc/img/User_table attributes.png"/>
  
  User table attributes
  </div>
