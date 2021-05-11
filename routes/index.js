@@ -1,4 +1,4 @@
-const rsRoutes = require("./rs");
+const rsRoutes = require("./tobedone");
 
 const constructorMethod = (app) => {
 	app.use("/", rsRoutes); // landing
